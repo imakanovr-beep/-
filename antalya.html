@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANTALYA — Салон красоты | Костанай</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#0e0b08;color:#d4c5b0;font-family:'Nunito',sans-serif;font-weight:300;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#1a1510;}
+::-webkit-scrollbar-thumb{background:#c9a96e44;border-radius:2px;}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(14,11,8,0.95),transparent);transition:background .3s;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:6px;color:#c9a96e;text-decoration:none;text-transform:uppercase;cursor:default;user-select:none;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#d4c5b0;text-decoration:none;transition:color .3s;}
+.nav-links a:hover{color:#c9a96e;}
+.nav-btn{font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 24px;border:1px solid #c9a96e;background:transparent;color:#c9a96e;text-decoration:none;transition:all .3s;cursor:pointer;font-family:'Nunito',sans-serif;}
+.nav-btn:hover{background:#c9a96e;color:#0e0b08;}
+@media(max-width:768px){nav{padding:18px 20px;}.nav-links{display:none;}}
+
+/* HERO */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#0e0b08;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 50%,rgba(201,169,110,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(201,169,110,0.05) 0%,transparent 60%);}
+.hero-content{text-align:center;position:relative;z-index:2;animation:heroIn 1.4s cubic-bezier(.16,1,.3,1) forwards;opacity:0;padding:0 20px;}
+@keyframes heroIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:#c9a96e;margin-bottom:20px;display:block;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(64px,10vw,120px);font-weight:300;line-height:.9;color:#fff8f0;letter-spacing:-2px;margin-bottom:8px;}
+.hero-title em{font-style:italic;color:#c9a96e;}
+.hero-sub{font-size:11px;letter-spacing:6px;text-transform:uppercase;color:#d4c5b0;margin-bottom:50px;opacity:.7;}
+.hero-divider{width:60px;height:1px;background:#c9a96e;margin:0 auto 30px;opacity:.5;}
+.hero-desc{font-size:13px;letter-spacing:1px;line-height:2;color:#d4c5b0;max-width:380px;margin:0 auto 44px;opacity:.8;}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-gold{padding:15px 40px;background:#c9a96e;color:#0e0b08;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-family:'Nunito',sans-serif;font-weight:600;transition:all .3s;display:inline-block;border:none;cursor:pointer;}
+.btn-gold:hover{background:#e8d5b0;}
+.btn-outline{padding:15px 40px;border:1px solid rgba(201,169,110,.4);color:#c9a96e;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;font-family:'Nunito',sans-serif;transition:all .3s;display:inline-block;}
+.btn-outline:hover{border-color:#c9a96e;background:rgba(201,169,110,.05);}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.4;}
+.hero-scroll span{font-size:9px;letter-spacing:4px;text-transform:uppercase;}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,#c9a96e,transparent);animation:sp 2s ease-in-out infinite;}
+@keyframes sp{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* SECTIONS */
+section{padding:100px 60px;}
+@media(max-width:768px){section{padding:70px 20px;}}
+.section-tag{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:#c9a96e;margin-bottom:16px;display:block;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,64px);font-weight:300;color:#fff8f0;line-height:1;margin-bottom:20px;}
+.section-title em{font-style:italic;color:#c9a96e;}
+
+/* SERVICES */
+#services{background:#1a1510;position:relative;}
+#services::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,#c9a96e,transparent);opacity:.2;}
+.services-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:24px;}
+.services-desc{max-width:300px;font-size:13px;line-height:2;opacity:.6;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;}
+.service-card{background:#241e17;padding:44px 36px;position:relative;overflow:hidden;transition:all .4s;cursor:pointer;}
+.service-card::before{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#c9a96e;transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.service-card:hover::before{transform:scaleX(1);}
+.service-card:hover{background:#2a2218;}
+.service-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:rgba(201,169,110,.07);line-height:1;margin-bottom:16px;}
+.service-icon{font-size:26px;margin-bottom:16px;display:block;}
+.service-name{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:#fff8f0;margin-bottom:12px;}
+.service-desc{font-size:12px;line-height:1.9;opacity:.55;margin-bottom:20px;}
+.service-price{font-size:11px;letter-spacing:2px;color:#c9a96e;}
+
+/* ABOUT */
+#about{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;background:#0e0b08;}
+@media(max-width:900px){#about{grid-template-columns:1fr;gap:40px;}}
+.about-visual{position:relative;height:520px;}
+.about-frame{position:absolute;inset:0;border:1px solid rgba(201,169,110,.15);}
+.about-frame-inner{position:absolute;inset:18px;border:1px solid rgba(201,169,110,.07);}
+.about-big-letter{position:absolute;font-family:'Cormorant Garamond',serif;font-size:280px;font-weight:300;color:rgba(201,169,110,.04);line-height:1;top:50%;left:50%;transform:translate(-50%,-50%);user-select:none;}
+.about-stats{position:absolute;bottom:32px;left:32px;right:32px;display:flex;gap:32px;}
+.stat{flex:1;border-top:1px solid rgba(201,169,110,.2);padding-top:16px;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;color:#c9a96e;display:block;line-height:1;margin-bottom:4px;}
+.stat-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;opacity:.5;}
+.about-text p{font-size:13px;line-height:2.1;opacity:.65;margin-bottom:18px;}
+.about-features{margin-top:36px;display:flex;flex-direction:column;gap:14px;}
+.about-feature{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:1px;}
+.feature-dot{width:4px;height:4px;background:#c9a96e;border-radius:50%;flex-shrink:0;}
+
+/* MASTERS */
+#masters{background:#1a1510;position:relative;}
+#masters::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,#c9a96e,transparent);opacity:.2;}
+.masters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:36px;margin-top:60px;}
+.master-card{}
+.master-photo{width:100%;aspect-ratio:3/4;background:#241e17;position:relative;overflow:hidden;margin-bottom:22px;}
+.master-initials{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:rgba(201,169,110,.12);}
+.master-photo-border{position:absolute;inset:0;border:1px solid rgba(201,169,110,.1);transition:border-color .3s;}
+.master-card:hover .master-photo-border{border-color:rgba(201,169,110,.3);}
+.master-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:#fff8f0;margin-bottom:6px;}
+.master-role{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#c9a96e;}
+
+/* GALLERY */
+#gallery{background:#0e0b08;padding:100px 0;}
+.gallery-header{padding:0 60px;margin-bottom:50px;}
+@media(max-width:768px){.gallery-header{padding:0 20px;}}
+.gallery-scroll{display:flex;gap:3px;overflow-x:auto;padding:0 60px;scrollbar-width:none;}
+.gallery-scroll::-webkit-scrollbar{display:none;}
+@media(max-width:768px){.gallery-scroll{padding:0 20px;}}
+.gallery-item{flex-shrink:0;width:300px;height:400px;background:#241e17;position:relative;overflow:hidden;cursor:pointer;}
+.gallery-item-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:90px;font-weight:300;color:rgba(201,169,110,.06);transition:transform .6s;}
+.gallery-item:hover .gallery-item-inner{transform:scale(1.05);}
+.gallery-label{position:absolute;bottom:20px;left:20px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#c9a96e;opacity:0;transform:translateY(8px);transition:all .3s;}
+.gallery-item:hover .gallery-label{opacity:1;transform:translateY(0);}
+
+/* BOOKING SECTION */
+#booking{background:#1a1510;position:relative;}
+#booking::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,#c9a96e,transparent);opacity:.2;}
+.booking-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 80% 50%,rgba(201,169,110,.05) 0%,transparent 70%);}
+.booking-top{text-align:center;margin-bottom:50px;position:relative;z-index:2;}
+#booking-app{position:relative;z-index:2;max-width:680px;margin:0 auto;}
+
+/* FOOTER */
+footer{background:#0e0b08;padding:70px 60px 36px;border-top:1px solid rgba(201,169,110,.1);}
+@media(max-width:768px){footer{padding:50px 20px 30px;}}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px;}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr;gap:30px;}}
+@media(max-width:500px){.footer-top{grid-template-columns:1fr;}}
+.footer-brand p{font-size:12px;line-height:2;opacity:.5;max-width:240px;margin-top:14px;}
+.footer-col h4{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#c9a96e;margin-bottom:20px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:10px;}
+.footer-col ul a{font-size:12px;color:#d4c5b0;text-decoration:none;opacity:.5;transition:opacity .3s,color .3s;}
+.footer-col ul a:hover{opacity:1;color:#c9a96e;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.05);font-size:11px;opacity:.3;flex-wrap:wrap;gap:10px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <span class="nav-logo" id="nav-logo">Antalya</span>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#masters">Мастера</a></li>
+    <li><a href="#gallery">Работы</a></li>
+    <li><a href="#about">О нас</a></li>
+  </ul>
+  <a href="#booking" class="nav-btn">Записаться</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Салон красоты премиум-класса · Костанай</span>
+    <h1 class="hero-title">ANT<em>AL</em>YA</h1>
+    <p class="hero-sub">Волосы · Стрижки · Барбер</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">Искусство красоты в каждой детали. Профессиональные мастера и атмосфера истинного совершенства.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-gold">Записаться</a>
+      <a href="#services" class="btn-outline">Наши услуги</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Прокрутить</span>
+    <div class="scroll-line"></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <span class="section-tag">Что мы предлагаем</span>
+      <h2 class="section-title">Наши <em>услуги</em></h2>
+    </div>
+    <p class="services-desc">Каждая процедура — ритуал красоты, выполненный с вниманием к деталям.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">01</div>
+      <span class="service-icon">✂️</span>
+      <h3 class="service-name">Стрижка мужская</h3>
+      <p class="service-desc">Классические и современные мужские стрижки от опытных барберов.</p>
+      <span class="service-price">7 000 ₸ · 1 час</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">02</div>
+      <span class="service-icon">✂️</span>
+      <h3 class="service-name">Стрижка женская</h3>
+      <p class="service-desc">Авторские стрижки, подчёркивающие вашу индивидуальность.</p>
+      <span class="service-price">7 000 ₸ · 1 час</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">03</div>
+      <span class="service-icon">🪒</span>
+      <h3 class="service-name">Оформление бороды</h3>
+      <p class="service-desc">Чёткие контуры, моделирование формы и уход за бородой.</p>
+      <span class="service-price">5 000 ₸ · 30 минут</span>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">04</div>
+      <span class="service-icon">🎨</span>
+      <h3 class="service-name">Сложное окрашивание</h3>
+      <p class="service-desc">Балаяж, омбре и авторское окрашивание. Укладка в подарок.</p>
+      <span class="service-price">35 000 – 60 000 ₸ · 2 часа</span>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">05</div>
+      <span class="service-icon">💆</span>
+      <h3 class="service-name">Уход за волосами</h3>
+      <p class="service-desc">Кератин, ботокс, восстановление и лечение волос.</p>
+      <span class="service-price">от 20 000 ₸</span>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">06</div>
+      <span class="service-icon">💈</span>
+      <h3 class="service-name">Комплекс барбера</h3>
+      <p class="service-desc">Стрижка + борода + маска + депиляция воском за один визит.</p>
+      <span class="service-price">12 000 ₸ · 1 час</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-frame"></div>
+    <div class="about-frame-inner"></div>
+    <div class="about-big-letter">A</div>
+    <div class="about-stats">
+      <div class="stat"><span class="stat-num">321</span><span class="stat-label">Публикаций</span></div>
+      <div class="stat"><span class="stat-num">4к+</span><span class="stat-label">Клиентов</span></div>
+      <div class="stat"><span class="stat-num">9.5★</span><span class="stat-label">Рейтинг</span></div>
+    </div>
+  </div>
+  <div class="about-text reveal reveal-delay-2">
+    <span class="section-tag">Наша история</span>
+    <h2 class="section-title">Красота — <em>это искусство</em></h2>
+    <p>ANTALYA — салон красоты премиум-класса в Костанае, где каждый визит превращается в настоящий ритуал. Мы создаём пространство, где профессионализм встречается с эстетикой.</p>
+    <p>Наши мастера — профессионалы с многолетним опытом, постоянно совершенствующие своё мастерство. Мы используем только сертифицированные продукты ведущих брендов.</p>
+    <div class="about-features">
+      <div class="about-feature"><div class="feature-dot"></div><span>Профессиональные продукты премиум-класса</span></div>
+      <div class="about-feature"><div class="feature-dot"></div><span>Индивидуальный подход к каждому клиенту</span></div>
+      <div class="about-feature"><div class="feature-dot"></div><span>Современные техники и тренды</span></div>
+      <div class="about-feature"><div class="feature-dot"></div><span>Уютная атмосфера и безупречный сервис</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MASTERS -->
+<section id="masters">
+  <span class="section-tag reveal">Наша команда</span>
+  <h2 class="section-title reveal reveal-delay-1">Мастера <em>своего дела</em></h2>
+  <div class="masters-grid">
+    <div class="master-card reveal reveal-delay-1">
+      <div class="master-photo"><div class="master-initials">С</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Барбер</div>
+      <h3 class="master-name">Селим</h3>
+    </div>
+    <div class="master-card reveal reveal-delay-2">
+      <div class="master-photo"><div class="master-initials">И</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Найр-Стилист, Женский мастер</div>
+      <h3 class="master-name">Исрафил</h3>
+    </div>
+    <div class="master-card reveal reveal-delay-3">
+      <div class="master-photo"><div class="master-initials">Ф</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Барбер</div>
+      <h3 class="master-name">Фырат</h3>
+    </div>
+    <div class="master-card reveal reveal-delay-1">
+      <div class="master-photo"><div class="master-initials">Я</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Барбер</div>
+      <h3 class="master-name">Яман</h3>
+    </div>
+    <div class="master-card reveal reveal-delay-2">
+      <div class="master-photo"><div class="master-initials">Х</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Найр-Стилист, Женский мастер</div>
+      <h3 class="master-name">Хайдар</h3>
+    </div>
+    <div class="master-card reveal reveal-delay-3">
+      <div class="master-photo"><div class="master-initials">А</div><div class="master-photo-border"></div></div>
+      <div class="master-role">Барбер</div>
+      <h3 class="master-name">Андрей</h3>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gallery-header">
+    <span class="section-tag reveal">Наши работы</span>
+    <h2 class="section-title reveal reveal-delay-1">Галерея <em>работ</em></h2>
+  </div>
+  <div class="gallery-scroll">
+    <div class="gallery-item"><div class="gallery-item-inner">✦</div><div class="gallery-label">Окрашивание</div></div>
+    <div class="gallery-item"><div class="gallery-item-inner">✧</div><div class="gallery-label">Укладка</div></div>
+    <div class="gallery-item"><div class="gallery-item-inner">✦</div><div class="gallery-label">Стрижка</div></div>
+    <div class="gallery-item"><div class="gallery-item-inner">✧</div><div class="gallery-label">Балаяж</div></div>
+    <div class="gallery-item"><div class="gallery-item-inner">✦</div><div class="gallery-label">Барбер</div></div>
+    <div class="gallery-item"><div class="gallery-item-inner">✧</div><div class="gallery-label">Уход</div></div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-bg"></div>
+  <div class="booking-top">
+    <span class="section-tag reveal">Запись онлайн</span>
+    <h2 class="section-title reveal reveal-delay-1">Запишитесь <em>прямо сейчас</em></h2>
+  </div>
+  <div id="booking-app"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo" style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:5px;color:#c9a96e;">Antalya</span>
+      <p>Салон красоты премиум-класса в Костанае. Ваша красота — наше призвание.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Услуги</h4>
+      <ul>
+        <li><a href="#services">Стрижка</a></li>
+        <li><a href="#services">Окрашивание</a></li>
+        <li><a href="#services">Барбер</a></li>
+        <li><a href="#services">Уход за волосами</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Салон</h4>
+      <ul>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#masters">Мастера</a></li>
+        <li><a href="#gallery">Работы</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <ul>
+        <li><a href="https://wa.me/77028540396">WhatsApp</a></li>
+        <li><a href="https://instagram.com/salon_antalya_kostanay">Instagram</a></li>
+        <li><a href="#booking">Записаться</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 ANTALYA. Все права защищены.</span>
+    <span>ул. Алтынсарина 117, Костанай</span>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Nav background on scroll
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('main-nav');
+  if(window.scrollY > 80) { nav.style.background = 'rgba(14,11,8,0.97)'; nav.style.backdropFilter = 'blur(10px)'; }
+  else { nav.style.background = 'linear-gradient(to bottom,rgba(14,11,8,0.95),transparent)'; nav.style.backdropFilter = 'none'; }
+});
+
+// Secret manager tap on logo
+let tapCount = 0, lastTap = 0;
+document.getElementById('nav-logo').addEventListener('click', () => {
+  const now = Date.now();
+  tapCount = (now - lastTap < 700) ? tapCount + 1 : 1;
+  lastTap = now;
+  if(tapCount >= 5) { tapCount = 0; window.__openManager && window.__openManager(); }
+});
+</script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+const G="#c9a96e", D="#0e0b08", D2="#1a1510", D3="#241e17";
+
+const SERVICES={
+  "🔥 Популярные":[
+    {id:"p1",name:"Стрижка мужская",price:"7 000",duration:"1 час"},
+    {id:"p2",name:"Стрижка женская",price:"7 000",duration:"1 час"},
+    {id:"p3",name:"Оформление бороды",price:"5 000",duration:"30 минут"},
+    {id:"p4",name:"Стрижка детская. Мальчик",price:"5 000",duration:"30 минут"},
+    {id:"p5",name:"Комплекс. Стрижка + борода + маска + депиляция воском",price:"12 000",duration:"1 час"},
+    {id:"p6",name:"Сложное окрашивание + укладка в подарок",price:"35 000 – 60 000",duration:"2 часа"},
+  ],
+  "✂️ Стрижка волос":[
+    {id:"s1",name:"Стрижка мужская",price:"7 000",duration:"1 час"},
+    {id:"s2",name:"Стрижка с рисунком (мужской зал)",price:"5 000",duration:"1 час"},
+    {id:"s3",name:"Стрижка чёлки",price:"3 000",duration:"10 минут"},
+    {id:"s4",name:"Окантовка",price:"2 000 – 5 000",duration:"15 минут"},
+    {id:"s5",name:"Стрижка женская",price:"7 000",duration:"1 час"},
+    {id:"s6",name:"Стрижка детская. Мальчик",price:"5 000",duration:"30 минут"},
+    {id:"s7",name:"Мужская стрижка + камуфлирование",price:"14 000",duration:"1 час"},
+    {id:"s8",name:"Стрижка детская. Девочка",price:"4 000",duration:"30 минут"},
+    {id:"s9",name:"Комплекс. Стрижка + борода + маска + депиляция воском",price:"12 000",duration:"1 час"},
+    {id:"s10",name:"Мужская стрижка + Окрашивание",price:"14 000",duration:"1 час"},
+  ],
+  "🎨 Окрашивание волос":[
+    {id:"o1",name:"Окрашивание. Мужское",price:"7 000",duration:"30 минут"},
+    {id:"o2",name:"Смывка",price:"35 000 – 50 000",duration:"1 ч. 30 мин."},
+    {id:"o3",name:"Окрашивание тон в тон",price:"20 000 – 30 000",duration:"1 час"},
+    {id:"o4",name:"Тонирование волос, в зависимости от длины",price:"14 000",duration:"1 ч. 30 мин."},
+    {id:"o5",name:"Окрашивание корней волос",price:"14 000",duration:"1 час"},
+    {id:"o6",name:"Тонирование седины (муж.)",price:"7 000",duration:"30 минут"},
+    {id:"o7",name:"Сложное окрашивание + укладка в подарок",price:"35 000 – 60 000",duration:"2 часа"},
+    {id:"o8",name:"Окрашивание волос в один тон + Стрижка",price:"18 000 – 30 000",duration:"1 ч. 30 мин."},
+  ],
+  "💨 Укладка волос":[
+    {id:"u1",name:"Прическа женская",price:"8 000 – 12 000",duration:"45 минут"},
+    {id:"u2",name:"Укладка женская",price:"6 000 – 9 000",duration:"40 минут"},
+    {id:"u3",name:"Укладка мужская",price:"2 000",duration:"20 минут"},
+    {id:"u4",name:"Химическая завивка волос",price:"15 000 – 30 000",duration:"1 час"},
+    {id:"u5",name:"Укладка локоны",price:"6 000 – 10 000",duration:"45 минут"},
+    {id:"u6",name:"Укладка (брашинг, щипцы)",price:"6 000 – 10 000",duration:"1 час"},
+    {id:"u7",name:"Биозавивка волос",price:"20 000 – 40 000",duration:"1 час"},
+  ],
+  "💆 Уход за волосами":[
+    {id:"uh1",name:"Кератиновое выпрямление волос",price:"25 000 – 40 000",duration:"1 час"},
+    {id:"uh2",name:"Уход за волосами",price:"20 000 – 40 000",duration:"1 час"},
+    {id:"uh3",name:"Ботокс",price:"20 000 – 30 000",duration:"1 час"},
+    {id:"uh4",name:"Кератиновое лечение",price:"25 000 – 40 000",duration:"2 часа"},
+  ],
+  "🪒 Борода":[
+    {id:"b1",name:"Тонировка бороды",price:"4 000 – 5 000",duration:"30 минут"},
+    {id:"b2",name:"Оформление бороды",price:"5 000",duration:"30 минут"},
+  ],
+  "🧴 Мужской уход за лицом":[
+    {id:"m1",name:"Чистка лица",price:"3 000",duration:"20 минут"},
+  ],
+};
+
+const MASTERS=[
+  {id:"selim",name:"Селим",role:"Барбер"},
+  {id:"israfil",name:"Исрафил",role:"Найр-Стилист, Женский мастер"},
+  {id:"fyrat",name:"Фырат",role:"Барбер"},
+  {id:"yaman",name:"Яман",role:"Барбер"},
+  {id:"khaydar",name:"Хайдар",role:"Найр-Стилист, Женский мастер"},
+  {id:"andrey",name:"Андрей",role:"Барбер"},
+];
+
+const TIMES=["09:00","09:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00"];
+const PASS="antalya2024";
+
+function Modal({service,onClose,onSubmit,bookings}){
+  const[step,setStep]=useState(1);
+  const[master,setMaster]=useState(null);
+  const[date,setDate]=useState("");
+  const[time,setTime]=useState("");
+  const[name,setName]=useState("");
+  const[phone,setPhone]=useState("");
+  const[comment,setComment]=useState("");
+  const today=new Date().toISOString().split("T")[0];
+  const isTaken=(mid,d,t)=>mid!=="any"&&bookings.some(b=>b.master?.id===mid&&b.date===d&&b.time===t&&b.status!=="cancelled");
+  const submit=()=>{
+    if(!name||!phone)return;
+    onSubmit({service,master,date,time,name,phone,comment,id:Date.now(),status:"new",createdAt:new Date().toLocaleString("ru")});
+  };
+  const dot=(a,d)=>({width:26,height:26,borderRadius:"50%",border:`1px solid ${d?G:a?G:"#fff2"}`,background:d?G:"transparent",color:d?D:a?G:"#fff4",display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,flexShrink:0,cursor:"pointer"});
+  return(
+    <div onClick={e=>e.target===e.currentTarget&&onClose()} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.88)",zIndex:9000,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}>
+      <div style={{background:D2,border:`1px solid ${G}33`,width:"100%",maxWidth:520,maxHeight:"92vh",overflowY:"auto"}}>
+        <div style={{padding:"22px 22px 16px",borderBottom:`1px solid ${G}22`,display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+          <div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:"#fff8f0",marginBottom:4}}>{service.name}</div>
+            <div style={{fontSize:12,color:G}}>{service.price} ₸ · {service.duration}</div>
+          </div>
+          <button onClick={onClose} style={{background:"none",border:"none",color:"#fff6",fontSize:24,cursor:"pointer",padding:"0 4px",lineHeight:1}}>×</button>
+        </div>
+        <div style={{padding:"12px 22px",display:"flex",alignItems:"center",gap:8,borderBottom:`1px solid ${G}11`}}>
+          {["Мастер","Дата и время","Контакты"].map((l,i)=>(
+            <div key={i} style={{display:"flex",alignItems:"center",gap:6,flex:i<2?"1":"none"}}>
+              <div style={dot(step===i+1,step>i+1)} onClick={()=>step>i+1&&setStep(i+1)}>{step>i+1?"✓":i+1}</div>
+              <span style={{fontSize:10,color:step===i+1?G:"#fff3",whiteSpace:"nowrap"}}>{l}</span>
+              {i<2&&<div style={{flex:1,height:1,background:step>i+1?G+"55":"#fff1"}}/>}
+            </div>
+          ))}
+        </div>
+        <div style={{padding:"20px 22px"}}>
+          {step===1&&(
+            <div>
+              <div style={{fontSize:10,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:12}}>Выберите мастера</div>
+              {MASTERS.map(m=>(
+                <div key={m.id} onClick={()=>setMaster(m)} style={{padding:"11px 13px",border:`1px solid ${master?.id===m.id?G:"#fff1"}`,marginBottom:6,cursor:"pointer",background:master?.id===m.id?G+"11":"transparent",transition:"all .2s",display:"flex",alignItems:"center",gap:12}}>
+                  <div style={{width:38,height:38,borderRadius:"50%",background:D3,border:`1px solid ${G}33`,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Cormorant Garamond',serif",fontSize:17,color:G,flexShrink:0}}>{m.name[0]}</div>
+                  <div><div style={{fontWeight:600,color:"#fff8f0",fontSize:13}}>{m.name}</div><div style={{fontSize:11,color:"#fff4",marginTop:1}}>{m.role}</div></div>
+                </div>
+              ))}
+              <div onClick={()=>setMaster({id:"any",name:"Любой мастер"})} style={{padding:"11px 13px",border:`1px solid ${master?.id==="any"?G:"#fff1"}`,marginTop:4,cursor:"pointer",background:master?.id==="any"?G+"11":"transparent",textAlign:"center",fontSize:12,color:"#fff4"}}>Любой свободный мастер</div>
+              <button onClick={()=>master&&setStep(2)} style={{marginTop:16,width:"100%",padding:"12px",background:master?G:"#fff1",border:"none",color:master?D:"#fff2",fontSize:10,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Nunito',sans-serif",fontWeight:700,cursor:master?"pointer":"not-allowed",transition:"all .3s"}}>Далее →</button>
+            </div>
+          )}
+          {step===2&&(
+            <div>
+              <div style={{fontSize:10,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:12}}>Дата и время</div>
+              <label style={{fontSize:10,color:"#fff4",display:"block",marginBottom:6}}>Дата</label>
+              <input type="date" min={today} value={date} onChange={e=>{setDate(e.target.value);setTime("");}} style={{width:"100%",padding:"11px 12px",background:D3,border:`1px solid ${G}22`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:13,outline:"none",marginBottom:14,colorScheme:"dark"}}/>
+              {date&&(<>
+                <label style={{fontSize:10,color:"#fff4",display:"block",marginBottom:8}}>Время</label>
+                <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:5}}>
+                  {TIMES.map(t=>{
+                    const taken=master&&isTaken(master.id,date,t);
+                    return(
+                      <div key={t} onClick={()=>!taken&&setTime(t)} style={{padding:"9px 4px",textAlign:"center",fontSize:11,fontWeight:500,border:`1px solid ${taken?"#fff1":time===t?G:"#fff1"}`,color:taken?"#fff2":time===t?D:"#d4c5b0",background:taken?"#fff0":time===t?G:"transparent",cursor:taken?"not-allowed":"pointer",transition:"all .2s"}}>
+                        {t}{taken&&<div style={{fontSize:8,color:"#ef444466"}}>занято</div>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </>)}
+              <div style={{display:"flex",gap:8,marginTop:16}}>
+                <button onClick={()=>setStep(1)} style={{flex:1,padding:"12px",background:"transparent",border:`1px solid ${G}33`,color:G,fontSize:10,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>← Назад</button>
+                <button onClick={()=>date&&time&&setStep(3)} style={{flex:2,padding:"12px",background:date&&time?G:"#fff1",border:"none",color:date&&time?D:"#fff2",fontSize:10,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Nunito',sans-serif",fontWeight:700,cursor:date&&time?"pointer":"not-allowed",transition:"all .3s"}}>Далее →</button>
+              </div>
+            </div>
+          )}
+          {step===3&&(
+            <div>
+              <div style={{fontSize:10,letterSpacing:3,textTransform:"uppercase",color:G,marginBottom:12}}>Контакты</div>
+              <div style={{background:D3,padding:"12px 14px",marginBottom:16,borderLeft:`2px solid ${G}`,fontSize:12,lineHeight:1.8}}>
+                <div style={{color:"#fff8f0",fontWeight:600}}>{service.name}</div>
+                <div style={{color:"#fff4"}}>Мастер: {master?.name} · {date} в {time}</div>
+              </div>
+              {[["Ваше имя",name,setName,"text"],["Телефон",phone,setPhone,"tel"]].map(([l,v,s,t])=>(
+                <div key={l} style={{marginBottom:10}}>
+                  <label style={{fontSize:10,color:"#fff4",display:"block",marginBottom:5}}>{l}</label>
+                  <input type={t} value={v} onChange={e=>s(e.target.value)} placeholder={t==="tel"?"+7 (___) ___-__-__":""} style={{width:"100%",padding:"11px 12px",background:D3,border:`1px solid ${G}22`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:13,outline:"none"}}/>
+                </div>
+              ))}
+              <div style={{marginBottom:16}}>
+                <label style={{fontSize:10,color:"#fff4",display:"block",marginBottom:5}}>Пожелания</label>
+                <textarea value={comment} onChange={e=>setComment(e.target.value)} rows={2} style={{width:"100%",padding:"11px 12px",background:D3,border:`1px solid ${G}22`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:13,outline:"none",resize:"none"}}/>
+              </div>
+              <div style={{display:"flex",gap:8}}>
+                <button onClick={()=>setStep(2)} style={{flex:1,padding:"12px",background:"transparent",border:`1px solid ${G}33`,color:G,fontSize:10,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>← Назад</button>
+                <button onClick={submit} style={{flex:2,padding:"12px",background:name&&phone?G:"#fff1",border:"none",color:name&&phone?D:"#fff2",fontSize:10,letterSpacing:3,textTransform:"uppercase",fontFamily:"'Nunito',sans-serif",fontWeight:700,cursor:name&&phone?"pointer":"not-allowed",transition:"all .3s"}}>Записаться</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Success({booking,onClose}){
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:9001,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{background:D2,border:`1px solid ${G}44`,padding:"40px 28px",maxWidth:380,width:"100%",textAlign:"center"}}>
+        <div style={{fontSize:44,marginBottom:14}}>✨</div>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:"#fff8f0",marginBottom:8}}>Запись принята!</div>
+        <div style={{fontSize:13,color:"#fff5",marginBottom:26,lineHeight:1.9}}>
+          Мы свяжемся с вами по номеру<br/><span style={{color:G}}>{booking.phone}</span><br/>
+          <span style={{fontSize:12,color:"#fff3"}}>{booking.service.name} · {booking.date} в {booking.time}</span>
+        </div>
+        <button onClick={onClose} style={{padding:"12px 36px",background:G,border:"none",color:D,fontFamily:"'Nunito',sans-serif",fontSize:10,letterSpacing:3,textTransform:"uppercase",fontWeight:700,cursor:"pointer"}}>Закрыть</button>
+      </div>
+    </div>
+  );
+}
+
+function Login({onLogin,onClose}){
+  const[p,setP]=useState("");const[err,setErr]=useState(false);
+  const go=()=>p===PASS?onLogin():setErr(true);
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:9002,display:"flex",alignItems:"center",justifyContent:"center",padding:20}}>
+      <div style={{background:D2,border:`1px solid ${G}33`,padding:"32px 26px",maxWidth:320,width:"100%"}}>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:"#fff8f0",marginBottom:6}}>Панель менеджера</div>
+        <div style={{fontSize:12,color:"#fff3",marginBottom:20}}>Введите пароль для входа</div>
+        <input type="password" value={p} onChange={e=>{setP(e.target.value);setErr(false);}} onKeyDown={e=>e.key==="Enter"&&go()} placeholder="Пароль" style={{width:"100%",padding:"11px 13px",background:D3,border:`1px solid ${err?"#ef4444":G+"22"}`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:14,outline:"none",marginBottom:err?4:0}}/>
+        {err&&<div style={{fontSize:11,color:"#ef4444",marginBottom:8,marginTop:4}}>Неверный пароль</div>}
+        <div style={{display:"flex",gap:8,marginTop:12}}>
+          <button onClick={onClose} style={{flex:1,padding:"11px",background:"transparent",border:`1px solid ${G}33`,color:G,fontSize:10,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>Отмена</button>
+          <button onClick={go} style={{flex:2,padding:"11px",background:G,border:"none",color:D,fontSize:10,letterSpacing:2,textTransform:"uppercase",fontWeight:700,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>Войти</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Dashboard({bookings,onClose,onStatus}){
+  const[f,setF]=useState("all");const[q,setQ]=useState("");
+  const SC={new:"#f59e0b",confirmed:"#10b981",cancelled:"#ef4444",done:"#6b7280"};
+  const SL={new:"Новая",confirmed:"Подтверждена",cancelled:"Отменена",done:"Выполнена"};
+  const list=bookings.filter(b=>(f==="all"||b.status===f)&&(!q||b.name.toLowerCase().includes(q.toLowerCase())||b.phone.includes(q)||b.service.name.toLowerCase().includes(q.toLowerCase()))).sort((a,b)=>b.id-a.id);
+  const st={total:bookings.length,new:bookings.filter(b=>b.status==="new").length,confirmed:bookings.filter(b=>b.status==="confirmed").length,done:bookings.filter(b=>b.status==="done").length};
+  return(
+    <div style={{position:"fixed",inset:0,background:D,zIndex:9003,overflow:"auto"}}>
+      <div style={{background:D2,borderBottom:`1px solid ${G}22`,padding:"16px 20px",display:"flex",justifyContent:"space-between",alignItems:"center",position:"sticky",top:0,zIndex:10}}>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:"#fff8f0"}}>ANTALYA <span style={{color:G,fontSize:14}}>— Менеджер</span></div>
+        <button onClick={onClose} style={{background:"transparent",border:`1px solid ${G}33`,color:G,padding:"7px 13px",fontSize:9,letterSpacing:2,textTransform:"uppercase",cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>Выйти</button>
+      </div>
+      <div style={{padding:"18px",maxWidth:820,margin:"0 auto"}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:20}}>
+          {[["Всего",st.total,"#fff8f0"],["Новых",st.new,"#f59e0b"],["Подтверждено",st.confirmed,"#10b981"],["Выполнено",st.done,"#6b7280"]].map(([l,v,c])=>(
+            <div key={l} style={{background:D2,border:`1px solid ${G}11`,padding:"14px 12px"}}>
+              <div style={{fontSize:28,fontFamily:"'Cormorant Garamond',serif",color:c,fontWeight:300}}>{v}</div>
+              <div style={{fontSize:9,color:"#fff3",marginTop:3}}>{l}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{display:"flex",gap:7,marginBottom:12,flexWrap:"wrap"}}>
+          <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Поиск..." style={{flex:1,minWidth:150,padding:"8px 12px",background:D2,border:`1px solid ${G}22`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:12,outline:"none"}}/>
+          {["all","new","confirmed","done","cancelled"].map(s=>(
+            <button key={s} onClick={()=>setF(s)} style={{padding:"8px 12px",background:f===s?G:"transparent",border:`1px solid ${f===s?G:G+"33"}`,color:f===s?D:G,fontSize:9,letterSpacing:1,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>
+              {s==="all"?"Все":SL[s]}
+            </button>
+          ))}
+        </div>
+        {list.length===0?(
+          <div style={{textAlign:"center",padding:"44px",color:"#fff2",fontSize:13}}>{bookings.length===0?"Записей пока нет":"Ничего не найдено"}</div>
+        ):(
+          list.map(b=>(
+            <div key={b.id} style={{background:D2,border:`1px solid ${G}11`,padding:"14px 16px",marginBottom:7}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:8}}>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                    <span style={{fontWeight:700,color:"#fff8f0",fontSize:13}}>{b.name}</span>
+                    <span style={{fontSize:12,color:G}}>{b.phone}</span>
+                    <span style={{fontSize:9,padding:"2px 7px",background:SC[b.status]+"22",color:SC[b.status],borderRadius:20}}>{SL[b.status]}</span>
+                  </div>
+                  <div style={{fontSize:12,color:"#d4c5b0",marginBottom:2}}>{b.service.name}</div>
+                  <div style={{fontSize:11,color:"#fff3"}}>Мастер: {b.master?.name} · {b.date} в {b.time} · {b.service.price} ₸</div>
+                  {b.comment&&<div style={{fontSize:11,color:"#fff3",marginTop:2,fontStyle:"italic"}}>"{b.comment}"</div>}
+                  <div style={{fontSize:10,color:"#fff2",marginTop:2}}>{b.createdAt}</div>
+                </div>
+                <div style={{display:"flex",gap:5,flexWrap:"wrap"}}>
+                  {["confirmed","done","cancelled"].filter(s=>s!==b.status).map(s=>(
+                    <button key={s} onClick={()=>onStatus(b.id,s)} style={{padding:"5px 9px",background:"transparent",border:`1px solid ${SC[s]}44`,color:SC[s],fontSize:9,cursor:"pointer",fontFamily:"'Nunito',sans-serif"}}>
+                      {SL[s]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+function BookingApp(){
+  const[openCat,setOpenCat]=useState("🔥 Популярные");
+  const[selected,setSelected]=useState(null);
+  const[success,setSuccess]=useState(null);
+  const[bookings,setBookings]=useState(()=>{try{return JSON.parse(localStorage.getItem("antalya_bk")||"[]");}catch{return[];}});
+  const[showLogin,setShowLogin]=useState(false);
+  const[showDash,setShowDash]=useState(false);
+  const[search,setSearch]=useState("");
+
+  useEffect(()=>{
+    window.__openManager=()=>setShowLogin(true);
+    return()=>{delete window.__openManager;};
+  },[]);
+
+  const save=list=>{setBookings(list);try{localStorage.setItem("antalya_bk",JSON.stringify(list));}catch{}};
+  const handleSubmit=b=>{save([...bookings,b]);setSelected(null);setSuccess(b);};
+  const handleStatus=(id,status)=>save(bookings.map(b=>b.id===id?{...b,status}:b));
+
+  const allSvc=Object.values(SERVICES).flat();
+  const searchRes=search.length>1?allSvc.filter(s=>s.name.toLowerCase().includes(search.toLowerCase())):[];
+
+  return(
+    <div style={{fontFamily:"'Nunito',sans-serif",color:"#d4c5b0"}}>
+      <div style={{position:"relative",marginBottom:8}}>
+        <span style={{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",color:"#fff3",fontSize:13}}>🔍</span>
+        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Поиск услуги..."
+          style={{width:"100%",padding:"12px 14px 12px 34px",background:D3,border:`1px solid ${G}22`,color:"#fff8f0",fontFamily:"'Nunito',sans-serif",fontSize:13,outline:"none"}}/>
+      </div>
+      {search.length>1&&(
+        <div style={{background:D3,border:`1px solid ${G}22`,marginBottom:8}}>
+          {searchRes.length===0
+            ?<div style={{padding:"11px 14px",fontSize:13,color:"#fff3"}}>Ничего не найдено</div>
+            :searchRes.map(s=>(
+              <div key={s.id} onClick={()=>{setSelected(s);setSearch("");}} style={{padding:"11px 14px",borderBottom:`1px solid ${G}11`,cursor:"pointer",display:"flex",justifyContent:"space-between",fontSize:13}}>
+                <span>{s.name}</span><span style={{color:G,fontSize:12}}>{s.price} ₸</span>
+              </div>
+            ))
+          }
+        </div>
+      )}
+      <div style={{marginBottom:80}}>
+        {Object.entries(SERVICES).map(([cat,items])=>(
+          <div key={cat}>
+            <div onClick={()=>setOpenCat(openCat===cat?null:cat)} style={{padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",borderBottom:`1px solid ${G}11`,background:openCat===cat?"#1a150a":"transparent",transition:"background .2s"}}>
+              <span style={{fontSize:14,fontWeight:500,color:openCat===cat?"#fff8f0":"#d4c5b0"}}>{cat} ({items.length})</span>
+              <span style={{color:G,fontSize:12,display:"inline-block",transition:"transform .3s",transform:openCat===cat?"rotate(180deg)":"none"}}>▾</span>
+            </div>
+            {openCat===cat&&items.map(s=>(
+              <div key={s.id} onClick={()=>setSelected(s)} style={{padding:"13px 16px",borderBottom:"1px solid #ffffff08",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}
+                onMouseEnter={e=>e.currentTarget.style.background="#1a1510"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                <div style={{flex:1,paddingRight:10}}>
+                  <div style={{fontSize:14,color:"#fff8f0",marginBottom:2}}>{s.name}</div>
+                  <div style={{fontSize:11,color:"#fff3"}}>{s.price} ₸ · {s.duration}</div>
+                </div>
+                <div style={{width:26,height:26,borderRadius:"50%",border:`1px solid ${G}44`,display:"flex",alignItems:"center",justifyContent:"center",color:G,fontSize:13,flexShrink:0}}>›</div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div style={{position:"fixed",bottom:0,left:0,right:0,padding:"11px 20px",background:D2,borderTop:`1px solid ${G}22`,zIndex:100}}>
+        <button onClick={()=>setSelected({id:"free",name:"Свободная запись",price:"—",duration:"—"})} style={{width:"100%",padding:"14px",background:G,border:"none",color:D,fontFamily:"'Nunito',sans-serif",fontSize:13,letterSpacing:2,textTransform:"uppercase",fontWeight:700,cursor:"pointer"}}>Записаться</button>
+      </div>
+      {selected&&<Modal service={selected} onClose={()=>setSelected(null)} onSubmit={handleSubmit} bookings={bookings}/>}
+      {success&&<Success booking={success} onClose={()=>setSuccess(null)}/>}
+      {showLogin&&<Login onLogin={()=>{setShowLogin(false);setShowDash(true);}} onClose={()=>setShowLogin(false)}/>}
+      {showDash&&<Dashboard bookings={bookings} onClose={()=>setShowDash(false)} onStatus={handleStatus}/>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("booking-app")).render(<BookingApp/>);
+</script>
+</body>
+</html>
